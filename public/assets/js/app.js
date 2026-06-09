@@ -232,7 +232,7 @@ function saveLocal(data=collectData()){
 async function persistRemote(data){
   setSyncStatus("Guardando…", "saving");
   const json = await remoteRequest("PUT", {user_id: currentUser ? currentUser.id : null, data}, apiWithUser());
-  setSyncStatus("Guardado automático", "saved");
+  setSyncStatus("Avance guardado", "saved");
   setTimeout(()=>setSyncStatus("Cambios al día", "saved"), 1200);
   return json;
 }

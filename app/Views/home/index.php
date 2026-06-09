@@ -33,16 +33,19 @@
         <p class="subtitle">Tenis de mesa · pérdida de grasa · energía competitiva · 70% velocidad de desplazamiento</p>
       </div>
     </div>
-    <div class="actions">
-      <span class="current-user" id="currentUserLabel">Sin usuario</span>
-      <button class="secondary" type="button" onclick="openUserGate()">Cambiar usuario</button>
-      <button onclick="window.print()">Imprimir / PDF</button>
-      <button class="secondary" onclick="saveAll({immediate:true}); toast('Avance guardado')">Guardar</button>
-      <button class="secondary" id="installApp" type="button" hidden>Instalar app</button>
-      <button class="danger" onclick="resetAll()">Limpiar</button>
-      <span class="sync-pill" id="syncStatus">Sincronizando…</span>
+    <div class="actions" aria-label="Acciones principales">
+      <button class="ghost-action" type="button" onclick="openUserGate()">Cambiar usuario</button>
+      <button class="primary-action" type="button" onclick="window.print()">Imprimir / PDF</button>
+      <button class="ghost-action" type="button" onclick="saveAll({immediate:true}); toast('Avance guardado')">Guardar</button>
+      <button class="ghost-action" id="installApp" type="button" hidden>Instalar app</button>
+      <button class="danger" type="button" onclick="resetAll()">Limpiar</button>
     </div>
   </header>
+
+  <div class="status-strip" role="status" aria-live="polite">
+    <span class="current-user" id="currentUserLabel">Sin usuario</span>
+    <span class="sync-pill" id="syncStatus">Sincronizando…</span>
+  </div>
 
   <section class="grid-top">
     <div class="card">
