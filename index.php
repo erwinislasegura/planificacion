@@ -29,6 +29,8 @@ use App\Core\Router;
 
 $router = new Router();
 $router->get('/', [HomeController::class, 'index']);
+$router->get('/api/users', [PlanController::class, 'users']);
+$router->post('/api/users', [PlanController::class, 'storeUser']);
 $router->get('/api/plan', [PlanController::class, 'show']);
 $router->put('/api/plan', [PlanController::class, 'update']);
 $router->delete('/api/plan', [PlanController::class, 'destroy']);

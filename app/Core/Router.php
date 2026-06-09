@@ -12,6 +12,11 @@ final class Router
         $this->routes['GET'][$path] = $handler;
     }
 
+    public function post(string $path, callable|array $handler): void
+    {
+        $this->routes['POST'][$path] = $handler;
+    }
+
     public function put(string $path, callable|array $handler): void
     {
         $this->routes['PUT'][$path] = $handler;

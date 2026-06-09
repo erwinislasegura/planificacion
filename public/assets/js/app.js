@@ -1,7 +1,10 @@
 
 const KEY = "alto_rendimiento_tenis_mesa_8s_corregido";
+const CURRENT_USER_KEY = KEY + "_current_user";
 const API_URL = (window.PLAN_APP && window.PLAN_APP.apiUrl) || "api/plan";
+const USERS_URL = API_URL.replace(/\/api\/plan$/, "/api/users").replace(/api\/plan$/, "api/users");
 const ASSET_BASE = (window.PLAN_APP && window.PLAN_APP.assetBase) || "public";
+let currentUser = null;
 
 const phases = [
   {t:"Adaptación técnica", o:"Ordenar comidas, eliminar extras líquidos y aprender rutina de pies.", a:"No recortar agresivo; priorizar constancia."},
@@ -204,28 +207,40 @@ function setSyncStatus(text, state="idle"){
   el.textContent = text;
   el.dataset.state = state;
 }
-async function remoteRequest(method="GET", payload=null){
+function apiWithUser(url=API_URL){
+  if(!currentUser || !currentUser.id) return url;
+  const separator = url.includes("?") ? "&" : "?";
+  return url + separator + "user_id=" + encodeURIComponent(currentUser.id);
+}
+function localKey(){
+  return currentUser && currentUser.id ? KEY + "_user_" + currentUser.id : KEY;
+}
+async function remoteRequest(method="GET", payload=null, url=API_URL){
   const options = { method, headers:{"Accept":"application/json"} };
   if(payload !== null){
     options.headers["Content-Type"] = "application/json";
     options.body = JSON.stringify(payload);
   }
-  const response = await fetch(API_URL, options);
+  const response = await fetch(url, options);
   const json = await response.json().catch(()=>({ok:false,message:"Respuesta inválida"}));
   if(!response.ok || json.ok === false) throw new Error(json.message || "No se pudo sincronizar");
   return json;
 }
 function saveLocal(data=collectData()){
-  localStorage.setItem(KEY, JSON.stringify(data));
+  localStorage.setItem(localKey(), JSON.stringify(data));
 }
 async function persistRemote(data){
   setSyncStatus("Guardando…", "saving");
-  const json = await remoteRequest("PUT", {data});
+  const json = await remoteRequest("PUT", {user_id: currentUser ? currentUser.id : null, data}, apiWithUser());
   setSyncStatus("Guardado automático", "saved");
   setTimeout(()=>setSyncStatus("Cambios al día", "saved"), 1200);
   return json;
 }
 function saveAll(options={}){
+  if(!currentUser){
+    setSyncStatus("Selecciona usuario", "warning");
+    return Promise.resolve({ok:true,waitingUser:true});
+  }
   const data = collectData();
   saveLocal(data);
   if(!window.PLAN_APP || !window.PLAN_APP.enableRemote){
@@ -244,11 +259,149 @@ function saveAll(options={}){
   setSyncStatus("Cambios pendientes…", "saving");
   return Promise.resolve({ok:true,queued:true});
 }
+
+function setUserGateStatus(text, state="idle"){
+  const el = document.getElementById("userGateStatus");
+  if(!el) return;
+  el.textContent = text;
+  el.dataset.state = state;
+}
+function escapeHtml(text){
+  return String(text ?? "").replace(/[&<>'"]/g, ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#039;","\"":"&quot;"}[ch]));
+}
+function clearFormFields(){
+  document.querySelectorAll("[data-save]").forEach(el=>{
+    if(el.type === "checkbox") el.checked = false;
+    else el.value = "";
+  });
+  const defaults = {estatura:160, peso_inicial:80, agua_objetivo:2.3, proteina_objetivo:120};
+  Object.keys(defaults).forEach(key=>{
+    const el = document.querySelector('[data-save="'+key+'"]');
+    if(el) el.value = defaults[key];
+  });
+}
+function setCurrentUser(user){
+  currentUser = user ? {id:Number(user.id), name:user.name || "Usuario"} : null;
+  if(currentUser){
+    localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(currentUser));
+  }else{
+    localStorage.removeItem(CURRENT_USER_KEY);
+  }
+  const label = document.getElementById("currentUserLabel");
+  if(label) label.textContent = currentUser ? "Usuario: " + currentUser.name : "Sin usuario";
+}
+function openUserGate(){
+  const gate = document.getElementById("userGate");
+  if(gate) gate.hidden = false;
+  loadUsers();
+}
+function closeUserGate(){
+  const gate = document.getElementById("userGate");
+  if(gate) gate.hidden = true;
+}
+async function loadUsers(search=""){
+  const list = document.getElementById("userList");
+  if(list) list.innerHTML = '<div class="user-empty">Buscando usuarios…</div>';
+  setUserGateStatus("Buscando…", "saving");
+  try{
+    const url = USERS_URL + (search ? "?search=" + encodeURIComponent(search) : "");
+    const json = await remoteRequest("GET", null, url);
+    renderUsers(json.users || []);
+    setUserGateStatus("Usuarios listos", "saved");
+  }catch(err){
+    console.warn(err);
+    if(list) list.innerHTML = '<div class="user-empty">No se pudo conectar con la base de datos. Puedes seguir con el último usuario guardado en este dispositivo.</div>';
+    setUserGateStatus("Sin conexión", "warning");
+  }
+}
+function renderUsers(users){
+  const list = document.getElementById("userList");
+  if(!list) return;
+  if(!users.length){
+    list.innerHTML = '<div class="user-empty">No hay usuarios con esa búsqueda. Crea uno nuevo abajo.</div>';
+    return;
+  }
+  list.innerHTML = users.map(user=>{
+    const updated = user.updated_at ? '<small>Actualizado: '+escapeHtml(user.updated_at)+'</small>' : '<small>Nuevo registro</small>';
+    return '<button type="button" class="user-row" data-user-id="'+Number(user.id)+'" data-user-name="'+escapeHtml(user.name)+'"><strong>'+escapeHtml(user.name)+'</strong>'+updated+'</button>';
+  }).join("");
+}
+async function createUser(){
+  const input = document.getElementById("newUserName");
+  const name = input ? input.value.trim() : "";
+  if(!name){
+    toast("Ingresa un nombre para crear usuario");
+    return;
+  }
+  setUserGateStatus("Creando usuario…", "saving");
+  try{
+    const json = await remoteRequest("POST", {name}, USERS_URL);
+    if(input) input.value = "";
+    await selectUser(json.user);
+    toast("Usuario creado");
+  }catch(err){
+    console.warn(err);
+    setUserGateStatus("No se pudo crear", "warning");
+    toast(err.message || "No se pudo crear usuario");
+  }
+}
+async function selectUser(user){
+  if(!user || !user.id) return;
+  window.__planHydrated = false;
+  clearTimeout(window.__planSaveTimer);
+  setCurrentUser(user);
+  clearFormFields();
+  closeUserGate();
+  setSyncStatus("Cargando usuario…", "saving");
+  await loadAll();
+  window.__planHydrated = true;
+  updateAll();
+  toast("Usuario seleccionado: " + currentUser.name);
+}
+function setupUserGate(){
+  const search = document.getElementById("userSearch");
+  const create = document.getElementById("createUserBtn");
+  const list = document.getElementById("userList");
+  let timer = null;
+  if(search){
+    search.addEventListener("input", ()=>{
+      clearTimeout(timer);
+      timer = setTimeout(()=>loadUsers(search.value.trim()), 250);
+    });
+  }
+  if(create) create.addEventListener("click", createUser);
+  const newName = document.getElementById("newUserName");
+  if(newName){
+    newName.addEventListener("keydown", event=>{
+      if(event.key === "Enter") createUser();
+    });
+  }
+  if(list){
+    list.addEventListener("click", event=>{
+      const row = event.target.closest(".user-row");
+      if(!row) return;
+      selectUser({id:row.dataset.userId, name:row.dataset.userName});
+    });
+  }
+}
+function restoreSavedUser(){
+  const raw = localStorage.getItem(CURRENT_USER_KEY);
+  if(!raw) return null;
+  try{
+    const user = JSON.parse(raw);
+    if(user && user.id){
+      setCurrentUser(user);
+      return user;
+    }
+  }catch(err){ console.warn(err); }
+  return null;
+}
+
 async function loadAll(){
   let loaded = false;
   if(window.PLAN_APP && window.PLAN_APP.enableRemote){
     try{
-      const json = await remoteRequest("GET");
+      const json = await remoteRequest("GET", null, apiWithUser());
       if(json.data && Object.keys(json.data).length){
         applyData(json.data);
         saveLocal(json.data);
@@ -261,7 +414,7 @@ async function loadAll(){
     }
   }
   if(!loaded){
-    const raw = localStorage.getItem(KEY);
+    const raw = localStorage.getItem(localKey());
     if(raw){
       try{ applyData(JSON.parse(raw)); }catch(e){ console.warn(e); }
     }
@@ -269,9 +422,9 @@ async function loadAll(){
 }
 async function resetAll(){
   if(!confirm("¿Seguro que deseas limpiar todos los datos?")) return;
-  localStorage.removeItem(KEY);
+  localStorage.removeItem(localKey());
   if(window.PLAN_APP && window.PLAN_APP.enableRemote){
-    remoteRequest("DELETE").catch(err=>console.warn(err));
+    remoteRequest("DELETE", null, apiWithUser()).catch(err=>console.warn(err));
   }
   document.querySelectorAll("[data-save]").forEach(el=>{
     if(el.type === "checkbox") el.checked = false;
@@ -515,9 +668,18 @@ buildNav();
 buildWeeks();
 setupInstallPrompt();
 setupServiceWorker();
-loadAll().then(()=>{
-  window.__planHydrated = true;
+setupUserGate();
+clearFormFields();
+const savedUser = restoreSavedUser();
+if(savedUser){
+  loadAll().then(()=>{
+    window.__planHydrated = true;
+    updateAll();
+  });
+}else{
+  setSyncStatus("Selecciona usuario", "warning");
+  openUserGate();
   updateAll();
-});
+}
 document.addEventListener("input", function(e){ if(e.target.matches("[data-save]")) updateAll(); });
 document.addEventListener("change", function(e){ if(e.target.matches("[data-save]")) updateAll(); });

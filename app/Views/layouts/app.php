@@ -21,7 +21,7 @@ $cssFile = dirname(__DIR__, 3) . '/public/assets/css/app.css';
   <link rel="manifest" href="<?= htmlspecialchars($asset('manifest.webmanifest'), ENT_QUOTES, 'UTF-8') ?>">
   <link rel="icon" href="<?= htmlspecialchars($asset('icons/icon.svg'), ENT_QUOTES, 'UTF-8') ?>" type="image/svg+xml">
   <link rel="apple-touch-icon" href="<?= htmlspecialchars($asset('icons/icon.svg'), ENT_QUOTES, 'UTF-8') ?>">
-  <link rel="stylesheet" href="<?= htmlspecialchars($asset('assets/css/app.css?v=visual-3'), ENT_QUOTES, 'UTF-8') ?>">
+  <link rel="stylesheet" href="<?= htmlspecialchars($asset('assets/css/app.css?v=usuarios-1'), ENT_QUOTES, 'UTF-8') ?>">
   <style id="app-css-fallback">
 <?php if (is_file($cssFile)) { readfile($cssFile); } ?>
   </style>
@@ -35,6 +35,6 @@ window.PLAN_APP = {
   enableRemote: <?= $enableRemote ? 'true' : 'false' ?>
 };
 </script>
-<script src="<?= htmlspecialchars($asset('assets/js/app.js?v=visual-3'), ENT_QUOTES, 'UTF-8') ?>" defer></script>
+<script src="<?= htmlspecialchars($asset('assets/js/app.js?v=usuarios-1'), ENT_QUOTES, 'UTF-8') ?>" defer></script>
 </body>
 </html>

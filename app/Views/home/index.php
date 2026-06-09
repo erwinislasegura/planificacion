@@ -1,4 +1,29 @@
 
+<div class="user-gate" id="userGate" hidden>
+  <div class="user-panel">
+    <div class="user-panel-head">
+      <div>
+        <h2>Seleccionar usuario</h2>
+        <p>Busca un deportista existente o crea uno nuevo para guardar su avance por separado.</p>
+      </div>
+      <span class="sync-pill" id="userGateStatus" data-state="saving">Cargando usuarios…</span>
+    </div>
+    <div class="user-panel-body">
+      <label for="userSearch">Buscar usuario</label>
+      <input id="userSearch" type="search" placeholder="Escribe nombre o apellido" autocomplete="off">
+      <div class="user-list" id="userList"></div>
+      <div class="user-create">
+        <div>
+          <label for="newUserName">Crear usuario nuevo</label>
+          <input id="newUserName" type="text" placeholder="Nombre del deportista" autocomplete="off">
+        </div>
+        <button type="button" id="createUserBtn">Crear y seleccionar</button>
+      </div>
+      <p class="user-help">Cada usuario tiene su ficha, semanas, métricas, notas y sincronización independiente.</p>
+    </div>
+  </div>
+</div>
+
 <div class="wrapper">
   <header class="header">
     <div class="brand">
@@ -9,6 +34,8 @@
       </div>
     </div>
     <div class="actions">
+      <span class="current-user" id="currentUserLabel">Sin usuario</span>
+      <button class="secondary" type="button" onclick="openUserGate()">Cambiar usuario</button>
       <button onclick="window.print()">Imprimir / PDF</button>
       <button class="secondary" onclick="saveAll({immediate:true}); toast('Avance guardado')">Guardar</button>
       <button class="secondary" id="installApp" type="button" hidden>Instalar app</button>
