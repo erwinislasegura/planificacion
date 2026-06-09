@@ -1,709 +1,7 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Programa Alto Rendimiento 8 Semanas - Tenis de Mesa</title>
-<style>
-:root{
-  --navy:#061B33;
-  --blue:#0B5F9E;
-  --green:#0E7A55;
-  --red:#B42318;
-  --amber:#B54708;
-  --purple:#53389E;
-  --bg:#F3F5F8;
-  --card:#FFFFFF;
-  --line:#CBD5E1;
-  --line2:#E5E7EB;
-  --text:#111827;
-  --muted:#667085;
-  --soft-blue:#EEF6FF;
-  --soft-green:#ECFDF3;
-  --soft-red:#FFF1F3;
-  --soft-amber:#FFF7ED;
-  --soft-purple:#F4F3FF;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Arial, Helvetica, sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  font-size:13px;
-}
-.wrapper{
-  width:min(1380px,96%);
-  margin:16px auto 50px;
-}
-.header{
-  background:var(--navy);
-  color:#fff;
-  border:1px solid #0B2748;
-  padding:18px;
-  display:flex;
-  justify-content:space-between;
-  gap:16px;
-  align-items:center;
-}
-.logo{
-  width:52px;
-  height:52px;
-  border:1px solid rgba(255,255,255,.45);
-  display:grid;
-  place-items:center;
-  font-size:18px;
-  font-weight:900;
-}
-.brand{
-  display:flex;
-  gap:14px;
-  align-items:center;
-}
-h1{
-  margin:0;
-  font-size:25px;
-  line-height:1.05;
-}
-.subtitle{
-  margin:5px 0 0;
-  color:#CBD5E1;
-}
-.actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
-button{
-  background:var(--blue);
-  color:#fff;
-  border:1px solid var(--blue);
-  padding:9px 11px;
-  font-weight:800;
-  cursor:pointer;
-  border-radius:3px;
-}
-button.secondary{
-  background:#fff;
-  color:var(--navy);
-  border:1px solid var(--line);
-}
-button.danger{
-  background:#fff;
-  color:var(--red);
-  border:1px solid #FDA29B;
-}
-.grid-top{
-  display:grid;
-  grid-template-columns:1fr 1.15fr;
-  gap:12px;
-  margin-top:12px;
-}
-.card{
-  background:var(--card);
-  border:1px solid var(--line);
-}
-.card-head{
-  padding:12px 14px;
-  background:#F8FAFC;
-  border-bottom:1px solid var(--line);
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  align-items:flex-start;
-}
-.card-head h2{
-  margin:0;
-  font-size:16px;
-}
-.card-head p{
-  margin:4px 0 0;
-  color:var(--muted);
-  font-size:12px;
-}
-.card-body{
-  padding:14px;
-}
-.form-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:8px;
-}
-label{
-  display:block;
-  font-size:10px;
-  font-weight:900;
-  color:var(--muted);
-  text-transform:uppercase;
-  letter-spacing:.4px;
-  margin-bottom:5px;
-}
-input, select, textarea{
-  width:100%;
-  border:1px solid var(--line);
-  background:#fff;
-  padding:8px 9px;
-  font:inherit;
-  border-radius:2px;
-}
-textarea{
-  min-height:58px;
-  resize:vertical;
-}
-.kpi-grid{
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:8px;
-}
-.kpi{
-  border:1px solid var(--line);
-  background:#fff;
-  padding:10px;
-  min-height:78px;
-}
-.kpi small{
-  display:block;
-  font-size:10px;
-  text-transform:uppercase;
-  font-weight:900;
-  color:var(--muted);
-  margin-bottom:7px;
-}
-.kpi strong{
-  display:block;
-  font-size:21px;
-}
-.kpi span{
-  color:var(--muted);
-  font-size:11px;
-}
-.info{background:var(--soft-blue)}
-.good{background:var(--soft-green)}
-.warn{background:var(--soft-amber)}
-.bad{background:var(--soft-red)}
-.purple{background:var(--soft-purple)}
-.progress-wrap{
-  height:8px;
-  border:1px solid var(--line);
-  background:#EFF4F8;
-  margin-top:10px;
-}
-.progress{
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,var(--blue),var(--green));
-}
-.alert{
-  margin-top:10px;
-  border:1px solid var(--line);
-  padding:10px 11px;
-  background:#fff;
-  color:var(--muted);
-}
-.alert.good{background:var(--soft-green);border-color:#ABEFC6;color:#067647}
-.alert.warn{background:var(--soft-amber);border-color:#FED7AA;color:#93370D}
-.alert.bad{background:var(--soft-red);border-color:#FECDCA;color:#912018}
-.layout{
-  display:grid;
-  grid-template-columns:280px 1fr;
-  gap:12px;
-  margin-top:12px;
-}
-.sidebar{
-  position:sticky;
-  top:10px;
-  align-self:start;
-}
-.week-nav{
-  display:grid;
-  gap:6px;
-}
-.week-btn{
-  width:100%;
-  background:#fff;
-  color:var(--text);
-  border:1px solid var(--line);
-  padding:9px 10px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.week-btn.active{
-  background:var(--navy);
-  color:#fff;
-}
-.badge{
-  border:1px solid var(--line);
-  background:#F2F4F7;
-  color:var(--muted);
-  font-size:11px;
-  font-weight:900;
-  padding:2px 6px;
-}
-.week-btn.active .badge{
-  background:rgba(255,255,255,.12);
-  color:#fff;
-  border-color:rgba(255,255,255,.35);
-}
-.mini-list{
-  margin-top:10px;
-  display:grid;
-  gap:6px;
-}
-.mini{
-  border:1px solid var(--line);
-  padding:8px 9px;
-  display:flex;
-  justify-content:space-between;
-  color:var(--muted);
-}
-.mini strong{
-  color:var(--text);
-}
-.week-panel{
-  display:none;
-}
-.week-panel.active{
-  display:block;
-}
-.week-head{
-  display:flex;
-  justify-content:space-between;
-  gap:14px;
-  align-items:flex-start;
-  margin-bottom:10px;
-}
-.week-head h3{
-  margin:0;
-  font-size:20px;
-  color:var(--navy);
-}
-.tags{
-  display:flex;
-  gap:6px;
-  flex-wrap:wrap;
-  justify-content:flex-end;
-}
-.tag{
-  border:1px solid var(--line);
-  background:#fff;
-  padding:5px 8px;
-  font-size:11px;
-  font-weight:900;
-  color:var(--muted);
-}
-.phase-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-  margin-bottom:10px;
-}
-.phase{
-  border:1px solid var(--line);
-  background:#FBFCFE;
-  padding:10px;
-}
-.phase b{
-  display:block;
-  color:var(--navy);
-  margin-bottom:4px;
-}
-.phase p{
-  margin:0;
-  color:#344054;
-  font-size:12px;
-}
-.day-list{
-  display:grid;
-  gap:8px;
-}
-.day-card{
-  border:1px solid var(--line);
-  background:#fff;
-}
-.day-title{
-  padding:10px 11px;
-  background:#F8FAFC;
-  border-bottom:1px solid var(--line);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  cursor:pointer;
-}
-.day-title h4{
-  margin:0;
-  font-size:14px;
-  color:var(--navy);
-}
-.day-content{
-  display:none;
-  padding:11px;
-}
-.day-card.open .day-content{
-  display:block;
-}
-.meal-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:8px;
-}
-.box{
-  border:1px solid var(--line);
-  padding:10px;
-  background:#fff;
-}
-.box h5{
-  margin:0 0 7px;
-  color:var(--blue);
-  font-size:12.8px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.box ul{
-  margin:0;
-  padding-left:16px;
-  color:#344054;
-  font-size:12px;
-}
-.box li{
-  margin:3px 0;
-}
-input[type=checkbox]{
-  width:16px;
-  height:16px;
-  accent-color:var(--green);
-}
-.track-grid{
-  display:grid;
-  grid-template-columns:repeat(8,1fr);
-  gap:7px;
-  margin-top:9px;
-}
-.routine{
-  margin-top:9px;
-  border:1px solid #D6BBFB;
-  background:#FAF8FF;
-}
-.routine-head{
-  padding:9px 10px;
-  border-bottom:1px solid #D6BBFB;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.routine-head h5{
-  margin:0;
-  color:var(--purple);
-  font-size:13px;
-  font-weight:700;
-  text-transform:none;
-}
-.routine-grid{
-  padding:9px;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-}
-.routine-step{
-  border:1px solid #D6BBFB;
-  background:#fff;
-  padding:9px 10px;
-  min-height:112px;
-  font-size:11.4px;
-  line-height:1.38;
-  color:#475467;
-  font-weight:400;
-  text-transform:none;
-}
-.routine-step input{
-  margin-bottom:6px;
-}
-.routine-step b{
-  display:block;
-  color:var(--purple);
-  margin-bottom:5px;
-  font-size:11px;
-  line-height:1.25;
-  font-weight:700;
-  text-transform:none;
-  letter-spacing:.1px;
-}
-.routine-step span{
-  display:block;
-  color:#475467;
-  font-weight:400;
-  text-transform:none;
-}
-.checkrow{
-  display:grid;
-  grid-template-columns:repeat(8,1fr);
-  gap:7px;
-  margin-top:8px;
-}
-.check{
-  border:1px solid var(--line);
-  padding:7px;
-  display:flex;
-  align-items:center;
-  gap:5px;
-  color:#344054;
-  font-size:11.5px;
-}
-.calc-row{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  gap:7px;
-  margin-top:9px;
-}
-.calc{
-  border:1px solid var(--line);
-  background:#FBFCFE;
-  padding:9px;
-}
-.calc small{
-  display:block;
-  color:var(--muted);
-  font-size:9.6px;
-  text-transform:uppercase;
-  font-weight:900;
-  margin-bottom:4px;
-}
-.calc strong{
-  font-size:15px;
-}
-.notes-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-top:8px;
-}
-.table{
-  width:100%;
-  border-collapse:collapse;
-}
-.table th,.table td{
-  border:1px solid var(--line);
-  padding:8px;
-  text-align:left;
-  vertical-align:top;
-  font-size:12px;
-}
-.table th{
-  background:#F8FAFC;
-  color:var(--navy);
-  text-transform:uppercase;
-  font-size:11px;
-}
-.option-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:8px;
-}
-.option-card{
-  border:1px solid var(--line);
-  background:#fff;
-  padding:10px;
-}
-.option-card h4{
-  margin:0 0 7px;
-  color:var(--navy);
-}
-.option-card ul{
-  margin:0;
-  padding-left:16px;
-  color:#344054;
-}
-.footer-note{
-  margin-top:12px;
-  border:1px solid var(--line);
-  background:#fff;
-  padding:10px 12px;
-  color:var(--muted);
-}
-@media(max-width:1250px){
-  .grid-top,.layout{grid-template-columns:1fr}
-  .sidebar{position:static}
-  .kpi-grid{grid-template-columns:repeat(3,1fr)}
-  .form-grid,.phase-grid,.meal-grid,.option-grid{grid-template-columns:repeat(2,1fr)}
-  .track-grid,.routine-grid,.checkrow,.calc-row{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:720px){
-  .header{flex-direction:column;align-items:flex-start}
-  .kpi-grid,.form-grid,.phase-grid,.meal-grid,.option-grid,.track-grid,.routine-grid,.checkrow,.calc-row,.notes-grid{grid-template-columns:1fr}
-}
-@media print{
-  body{background:#fff}
-  .wrapper{width:100%;margin:0}
-  .actions,.sidebar{display:none}
-  .grid-top,.layout{display:block}
-  .card{margin-bottom:10px;box-shadow:none}
-  .week-panel{display:block}
-  .day-content{display:block!important}
-}
-</style>
-</head>
-<body>
-<div class="wrapper">
-  <header class="header">
-    <div class="brand">
-      <div class="logo">AR</div>
-      <div>
-        <h1>Programa Nutricional y Físico de Alto Rendimiento · 8 Semanas</h1>
-        <p class="subtitle">Tenis de mesa · pérdida de grasa · energía competitiva · 70% velocidad de desplazamiento</p>
-      </div>
-    </div>
-    <div class="actions">
-      <button onclick="window.print()">Imprimir / PDF</button>
-      <button class="secondary" onclick="saveAll(); toast('Avance guardado')">Guardar</button>
-      <button class="danger" onclick="resetAll()">Limpiar</button>
-    </div>
-  </header>
 
-  <section class="grid-top">
-    <div class="card">
-      <div class="card-head">
-        <div>
-          <h2>Ficha inicial</h2>
-          <p>Datos para cálculos nutricionales y deportivos.</p>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="form-grid">
-          <div><label>Deportista</label><input data-save="nombre" placeholder="Nombre"></div>
-          <div><label>Fecha inicio</label><input data-save="fecha_inicio" type="date"></div>
-          <div><label>Estatura cm</label><input data-save="estatura" type="number" value="160"></div>
-          <div><label>Peso inicial kg</label><input data-save="peso_inicial" type="number" step="0.1" value="80"></div>
-          <div><label>Meta 8 semanas kg</label><input data-save="meta_peso" type="number" step="0.1" placeholder="Ej: 74"></div>
-          <div><label>Agua objetivo L</label><input data-save="agua_objetivo" type="number" step="0.1" value="2.3"></div>
-          <div><label>Proteína objetivo g</label><input data-save="proteina_objetivo" type="number" value="120"></div>
-          <div><label>Tenis/semana</label><input data-save="entrenos_tenis" type="number" placeholder="Ej: 3"></div>
-        </div>
-        <div class="alert warn">
-          Enfoque técnico: déficit calórico moderado, proteína alta, carbohidrato estratégico y rutina diaria de 30 minutos. No se busca bajar peso a costa de perder velocidad, recuperación o potencia.
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-head">
-        <div>
-          <h2>Panel de rendimiento</h2>
-          <p>Indicadores calculados automáticamente con los registros diarios.</p>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="kpi-grid">
-          <div class="kpi info"><small>IMC inicial</small><strong id="imcInicial">—</strong><span id="imcEstado">Completar</span></div>
-          <div class="kpi good"><small>Peso actual</small><strong id="pesoActual">—</strong><span>último registro</span></div>
-          <div class="kpi warn"><small>Ritmo kg/sem</small><strong id="ritmoSemanal">—</strong><span>estimado</span></div>
-          <div class="kpi purple"><small>Índice velocidad</small><strong id="indiceVelocidad">0%</strong><span>rutina específica</span></div>
-          <div class="kpi info"><small>Readiness</small><strong id="readiness">—</strong><span>energía + sueño + dolor</span></div>
-          <div class="kpi good"><small>Adherencia total</small><strong id="adhTotal">0%</strong><span>nutrición + rutina</span></div>
-        </div>
-        <div class="progress-wrap"><div class="progress" id="progressMeta"></div></div>
-        <div class="alert" id="alertaPrincipal">Completa meta y registros para activar recomendaciones.</div>
-      </div>
-    </div>
-  </section>
-
-  <section class="layout">
-    <aside class="card sidebar">
-      <div class="card-head">
-        <div>
-          <h2>Seguimiento</h2>
-          <p>Semanas del programa.</p>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="week-nav" id="weekNav"></div>
-        <div class="mini-list">
-          <div class="mini"><span>Nutrición</span><strong id="miniNutri">0%</strong></div>
-          <div class="mini"><span>Rutina 30m</span><strong id="miniRutina">0%</strong></div>
-          <div class="mini"><span>Desplazamiento</span><strong id="miniSpeed">0%</strong></div>
-          <div class="mini"><span>Prom. energía</span><strong id="miniEnergia">—</strong></div>
-          <div class="mini"><span>Prom. sueño</span><strong id="miniSueno">—</strong></div>
-          <div class="mini"><span>Prom. agua</span><strong id="miniAgua">—</strong></div>
-        </div>
-      </div>
-    </aside>
-
-    <main class="card">
-      <div class="card-head">
-        <div>
-          <h2>Programa semanal alimentario y físico</h2>
-          <p>Rutinas variadas con 70% foco en velocidad de desplazamiento, reacción y cambios de dirección.</p>
-        </div>
-      </div>
-      <div class="card-body" id="weeksContainer"></div>
-    </main>
-  </section>
-
-  <section class="card" style="margin-top:12px">
-    <div class="card-head">
-      <div>
-        <h2>Recomendaciones automáticas</h2>
-        <p>Resumen ejecutivo según datos ingresados.</p>
-      </div>
-    </div>
-    <div class="card-body">
-      <div class="kpi-grid">
-        <div class="kpi info"><small>Baja total</small><strong id="bajaTotal">—</strong><span>desde inicio</span></div>
-        <div class="kpi info"><small>Meta lograda</small><strong id="metaLograda">0%</strong><span>progreso</span></div>
-        <div class="kpi warn"><small>Riesgo déficit</small><strong id="riesgoDeficit">—</strong><span>peso + energía</span></div>
-        <div class="kpi purple"><small>Foco físico</small><strong>70%</strong><span>desplazamiento</span></div>
-        <div class="kpi good"><small>Estado general</small><strong id="estadoGeneral">—</strong><span>decisión</span></div>
-        <div class="kpi warn"><small>Prom. dolor</small><strong id="promDolor">—</strong><span>0 a 10</span></div>
-      </div>
-      <div class="alert" id="recomendacionFinal">Registra peso, energía, sueño, agua y cumplimiento para recibir recomendaciones.</div>
-    </div>
-  </section>
-
-  <section class="card" style="margin-top:12px">
-    <div class="card-head">
-      <div>
-        <h2>Guía técnica de la rutina de 30 minutos</h2>
-        <p>Aproximadamente 21 minutos están destinados a desplazamiento, reacción y cambios de dirección.</p>
-      </div>
-    </div>
-    <div class="card-body">
-      <table class="table">
-        <thead>
-          <tr><th>Bloque</th><th>Duración</th><th>Objetivo</th><th>Indicaciones técnicas</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Velocidad de pies</td><td>8 min</td><td>Primer paso, frecuencia y postura baja</td><td>Rodillas semiflexionadas, peso en punta de pies, pasos cortos y rápidos.</td></tr>
-          <tr><td>Desplazamiento lateral</td><td>7 min</td><td>Cubrir mesa y volver al centro</td><td>No cruzar pies en desplazamientos cortos; regresar siempre a posición neutra.</td></tr>
-          <tr><td>Reacción y cambios de dirección</td><td>6 min</td><td>Responder estímulos y frenar sin perder equilibrio</td><td>Usar señales visuales/sonoras, conos o marcas en el piso.</td></tr>
-          <tr><td>Fuerza funcional</td><td>5 min</td><td>Estabilidad de piernas y core</td><td>Trabajo controlado, sin llegar al fallo muscular.</td></tr>
-          <tr><td>Movilidad y descarga</td><td>4 min</td><td>Recuperación y rango de movimiento</td><td>Cadera, tobillos, espalda torácica y respiración.</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="card" style="margin-top:12px">
-    <div class="card-head">
-      <div>
-        <h2>Indicaciones alimentarias</h2>
-        <p>Simples, económicas y orientadas a sostener velocidad y recuperación.</p>
-      </div>
-    </div>
-    <div class="card-body">
-      <div class="option-grid">
-        <div class="option-card"><h4>Proteína diaria</h4><ul><li>Objetivo: 110 a 130 g/día.</li><li>Huevos, pollo, jurel, atún, yogur, quesillo y legumbres.</li><li>Debe aparecer en cada comida.</li></ul></div>
-        <div class="option-card"><h4>Carbohidrato estratégico</h4><ul><li>Antes de entrenar: fruta, avena o pan integral.</li><li>Después: papa, arroz o legumbre medida.</li><li>No eliminar en días de intensidad.</li></ul></div>
-        <div class="option-card"><h4>Déficit seguro</h4><ul><li>Baja ideal: 0,4 a 0,9 kg/semana.</li><li>Más rápido puede afectar velocidad y recuperación.</li><li>Si energía baja: subir carbohidrato deportivo.</li></ul></div>
-        <div class="option-card"><h4>Compra económica</h4><ul><li>Huevos, jurel, atún, pollo, lentejas.</li><li>Avena, arroz, papa, frutas de temporada.</li><li>Repollo, zanahoria, lechuga, tomate.</li></ul></div>
-      </div>
-    </div>
-  </section>
-
-  <p class="footer-note">Documento de planificación deportiva y nutricional. No reemplaza evaluación individual presencial de nutricionista, médico o kinesiólogo.</p>
-</div>
-
-<script>
 const KEY = "alto_rendimiento_tenis_mesa_8s_corregido";
+const API_URL = (window.PLAN_APP && window.PLAN_APP.apiUrl) || "api/plan";
+const ASSET_BASE = (window.PLAN_APP && window.PLAN_APP.assetBase) || "public";
 
 const phases = [
   {t:"Adaptación técnica", o:"Ordenar comidas, eliminar extras líquidos y aprender rutina de pies.", a:"No recortar agresivo; priorizar constancia."},
@@ -892,20 +190,89 @@ function collectData(){
   });
   return data;
 }
-function saveAll(){ localStorage.setItem(KEY, JSON.stringify(collectData())); }
-function loadAll(){
-  const raw = localStorage.getItem(KEY);
-  if(!raw) return;
-  const data = JSON.parse(raw);
+function applyData(data){
+  if(!data || typeof data !== "object") return;
   document.querySelectorAll("[data-save]").forEach(el=>{
     if(data[el.dataset.save] === undefined) return;
-    if(el.type === "checkbox") el.checked = data[el.dataset.save];
+    if(el.type === "checkbox") el.checked = Boolean(data[el.dataset.save]);
     else el.value = data[el.dataset.save];
   });
 }
-function resetAll(){
+function setSyncStatus(text, state="idle"){
+  const el = document.getElementById("syncStatus");
+  if(!el) return;
+  el.textContent = text;
+  el.dataset.state = state;
+}
+async function remoteRequest(method="GET", payload=null){
+  const options = { method, headers:{"Accept":"application/json"} };
+  if(payload !== null){
+    options.headers["Content-Type"] = "application/json";
+    options.body = JSON.stringify(payload);
+  }
+  const response = await fetch(API_URL, options);
+  const json = await response.json().catch(()=>({ok:false,message:"Respuesta inválida"}));
+  if(!response.ok || json.ok === false) throw new Error(json.message || "No se pudo sincronizar");
+  return json;
+}
+function saveLocal(data=collectData()){
+  localStorage.setItem(KEY, JSON.stringify(data));
+}
+async function persistRemote(data){
+  setSyncStatus("Guardando…", "saving");
+  const json = await remoteRequest("PUT", {data});
+  setSyncStatus("Guardado automático", "saved");
+  setTimeout(()=>setSyncStatus("Cambios al día", "saved"), 1200);
+  return json;
+}
+function saveAll(options={}){
+  const data = collectData();
+  saveLocal(data);
+  if(!window.PLAN_APP || !window.PLAN_APP.enableRemote){
+    setSyncStatus("Guardado local", "saved");
+    return Promise.resolve({ok:true,local:true});
+  }
+  if(!window.__planHydrated && !options.force) return Promise.resolve({ok:true,pending:true});
+  clearTimeout(window.__planSaveTimer);
+  const runner = () => persistRemote(data).catch(err=>{
+    console.warn(err);
+    setSyncStatus("Offline: guardado local", "warning");
+    return {ok:false,error:err.message};
+  });
+  if(options.immediate) return runner();
+  window.__planSaveTimer = setTimeout(runner, 650);
+  setSyncStatus("Cambios pendientes…", "saving");
+  return Promise.resolve({ok:true,queued:true});
+}
+async function loadAll(){
+  let loaded = false;
+  if(window.PLAN_APP && window.PLAN_APP.enableRemote){
+    try{
+      const json = await remoteRequest("GET");
+      if(json.data && Object.keys(json.data).length){
+        applyData(json.data);
+        saveLocal(json.data);
+        loaded = true;
+      }
+      setSyncStatus("Cambios al día", "saved");
+    }catch(err){
+      console.warn(err);
+      setSyncStatus("Modo local sin conexión", "warning");
+    }
+  }
+  if(!loaded){
+    const raw = localStorage.getItem(KEY);
+    if(raw){
+      try{ applyData(JSON.parse(raw)); }catch(e){ console.warn(e); }
+    }
+  }
+}
+async function resetAll(){
   if(!confirm("¿Seguro que deseas limpiar todos los datos?")) return;
   localStorage.removeItem(KEY);
+  if(window.PLAN_APP && window.PLAN_APP.enableRemote){
+    remoteRequest("DELETE").catch(err=>console.warn(err));
+  }
   document.querySelectorAll("[data-save]").forEach(el=>{
     if(el.type === "checkbox") el.checked = false;
     else el.value = "";
@@ -915,6 +282,7 @@ function resetAll(){
   document.querySelector('[data-save="agua_objetivo"]').value = 2.3;
   document.querySelector('[data-save="proteina_objetivo"]').value = 120;
   updateAll();
+  saveAll({immediate:true, force:true});
 }
 function toast(msg){
   const old = document.getElementById("toast");
@@ -1119,12 +487,37 @@ function updateAll(){
   saveAll();
 }
 
+function setupInstallPrompt(){
+  let deferredPrompt = null;
+  const installButton = document.getElementById("installApp");
+  window.addEventListener("beforeinstallprompt", (event)=>{
+    event.preventDefault();
+    deferredPrompt = event;
+    if(installButton) installButton.hidden = false;
+  });
+  if(installButton){
+    installButton.addEventListener("click", async ()=>{
+      if(!deferredPrompt) return;
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      installButton.hidden = true;
+    });
+  }
+}
+function setupServiceWorker(){
+  if("serviceWorker" in navigator){
+    navigator.serviceWorker.register(ASSET_BASE + "/sw.js").catch(err=>console.warn("SW", err));
+  }
+}
+
 buildNav();
 buildWeeks();
-loadAll();
-updateAll();
+setupInstallPrompt();
+setupServiceWorker();
+loadAll().then(()=>{
+  window.__planHydrated = true;
+  updateAll();
+});
 document.addEventListener("input", function(e){ if(e.target.matches("[data-save]")) updateAll(); });
 document.addEventListener("change", function(e){ if(e.target.matches("[data-save]")) updateAll(); });
-</script>
-</body>
-</html>

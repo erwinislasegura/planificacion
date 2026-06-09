@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Plan AR">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#061B33"/>
+      <stop offset="0.55" stop-color="#0B5F9E"/>
+      <stop offset="1" stop-color="#0E7A55"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#g)"/>
+  <circle cx="362" cy="132" r="44" fill="#fff" opacity=".94"/>
+  <path d="M108 342c80-112 154-166 270-196" fill="none" stroke="#fff" stroke-width="34" stroke-linecap="round" opacity=".92"/>
+  <path d="M143 151h64l86 210h-61l-14-39h-88l-14 39H56l87-210Zm31 55-28 75h56l-28-75Zm130-55h92c51 0 82 27 82 70 0 29-15 51-40 62l48 78h-66l-39-67h-22v67h-55V151Zm55 47v52h31c20 0 32-10 32-27 0-16-12-25-32-25h-31Z" fill="#fff"/>
+</svg>
