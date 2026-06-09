@@ -17,7 +17,7 @@
   <link rel="manifest" href="/public/manifest.webmanifest">
   <link rel="icon" href="/public/icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/public/icons/icon.svg">
-  <link rel="stylesheet" href="/public/assets/css/app.css">
+  <link rel="stylesheet" href="/public/assets/css/app.css?v=visual-2">
 </head>
 <body>
 <?= $content ?>
@@ -27,6 +27,6 @@ window.PLAN_APP = {
   enableRemote: <?= $enableRemote ? 'true' : 'false' ?>
 };
 </script>
-<script src="/public/assets/js/app.js" defer></script>
+<script src="/public/assets/js/app.js?v=visual-2" defer></script>
 </body>
 </html>
