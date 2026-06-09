@@ -1,10 +1,10 @@
-const CACHE_NAME = 'plan-ar-v2';
+const CACHE_NAME = 'plan-ar-v3';
 const APP_SHELL = [
-  '/',
-  '/public/assets/css/app.css',
-  '/public/assets/js/app.js',
-  '/public/manifest.webmanifest',
-  '/public/icons/icon.svg'
+  './',
+  './assets/css/app.css',
+  './assets/js/app.js',
+  './manifest.webmanifest',
+  './icons/icon.svg'
 ];
 
 self.addEventListener('install', (event) => {

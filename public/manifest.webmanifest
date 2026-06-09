@@ -2,13 +2,13 @@
   "name": "Programa Alto Rendimiento 8 Semanas",
   "short_name": "Plan AR",
   "description": "Plan nutricional y físico instalable con guardado automático.",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "../",
+  "scope": "../",
   "display": "standalone",
   "background_color": "#F3F5F8",
   "theme_color": "#061B33",
   "orientation": "portrait-primary",
   "icons": [
-    {"src": "/public/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}
+    {"src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}
   ]
 }

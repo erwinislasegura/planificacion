@@ -1,6 +1,7 @@
 
 const KEY = "alto_rendimiento_tenis_mesa_8s_corregido";
-const API_URL = (window.PLAN_APP && window.PLAN_APP.apiUrl) || "/api/plan";
+const API_URL = (window.PLAN_APP && window.PLAN_APP.apiUrl) || "api/plan";
+const ASSET_BASE = (window.PLAN_APP && window.PLAN_APP.assetBase) || "public";
 
 const phases = [
   {t:"Adaptación técnica", o:"Ordenar comidas, eliminar extras líquidos y aprender rutina de pies.", a:"No recortar agresivo; priorizar constancia."},
@@ -506,7 +507,7 @@ function setupInstallPrompt(){
 }
 function setupServiceWorker(){
   if("serviceWorker" in navigator){
-    navigator.serviceWorker.register("/public/sw.js").catch(err=>console.warn("SW", err));
+    navigator.serviceWorker.register(ASSET_BASE + "/sw.js").catch(err=>console.warn("SW", err));
   }
 }
 
