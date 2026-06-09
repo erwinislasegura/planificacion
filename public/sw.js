@@ -1,4 +1,4 @@
-const CACHE_NAME = 'plan-ar-v3';
+const CACHE_NAME = 'plan-ar-v4';
 const APP_SHELL = [
   './',
   './assets/css/app.css',

@@ -45,6 +45,8 @@ Aplicación PHP MVC + MySQL para registrar automáticamente el programa nutricio
 - `database/schema.sql`: esquema inicial MySQL.
 - `public`: assets, manifest PWA, service worker e iconos.
 
-## Guardado automático
+## Usuarios y guardado automático
 
-Cada cambio en campos, checks o métricas recalcula los indicadores y se guarda con debounce en `/api/plan`. Si no hay conexión o MySQL no está disponible, el progreso queda respaldado en `localStorage` y la interfaz muestra el estado de sincronización.
+Al abrir la app se solicita seleccionar un usuario existente o crear uno nuevo. La búsqueda consulta `/api/users`, cada deportista mantiene su propio registro en la tabla `plans` y las acciones de guardar, cargar o limpiar usan el `user_id` seleccionado en `/api/plan`.
+
+Cada cambio en campos, checks o métricas recalcula los indicadores y se guarda con debounce en `/api/plan`. Si no hay conexión o MySQL no está disponible, el progreso queda respaldado en `localStorage` separado por usuario y la interfaz muestra el estado de sincronización.
