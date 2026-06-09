@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programa Alto Rendimiento 8 Semanas - Tenis de Mesa</title>
+<style>
+:root{
+  --navy:#061B33;
+  --blue:#0B5F9E;
+  --green:#0E7A55;
+  --red:#B42318;
+  --amber:#B54708;
+  --purple:#53389E;
+  --bg:#F3F5F8;
+  --card:#FFFFFF;
+  --line:#CBD5E1;
+  --line2:#E5E7EB;
+  --text:#111827;
+  --muted:#667085;
+  --soft-blue:#EEF6FF;
+  --soft-green:#ECFDF3;
+  --soft-red:#FFF1F3;
+  --soft-amber:#FFF7ED;
+  --soft-purple:#F4F3FF;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-size:13px;
+}
+.wrapper{
+  width:min(1380px,96%);
+  margin:16px auto 50px;
+}
+.header{
+  background:var(--navy);
+  color:#fff;
+  border:1px solid #0B2748;
+  padding:18px;
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  align-items:center;
+}
+.logo{
+  width:52px;
+  height:52px;
+  border:1px solid rgba(255,255,255,.45);
+  display:grid;
+  place-items:center;
+  font-size:18px;
+  font-weight:900;
+}
+.brand{
+  display:flex;
+  gap:14px;
+  align-items:center;
+}
+h1{
+  margin:0;
+  font-size:25px;
+  line-height:1.05;
+}
+.subtitle{
+  margin:5px 0 0;
+  color:#CBD5E1;
+}
+.actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+button{
+  background:var(--blue);
+  color:#fff;
+  border:1px solid var(--blue);
+  padding:9px 11px;
+  font-weight:800;
+  cursor:pointer;
+  border-radius:3px;
+}
+button.secondary{
+  background:#fff;
+  color:var(--navy);
+  border:1px solid var(--line);
+}
+button.danger{
+  background:#fff;
+  color:var(--red);
+  border:1px solid #FDA29B;
+}
+.grid-top{
+  display:grid;
+  grid-template-columns:1fr 1.15fr;
+  gap:12px;
+  margin-top:12px;
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+}
+.card-head{
+  padding:12px 14px;
+  background:#F8FAFC;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:flex-start;
+}
+.card-head h2{
+  margin:0;
+  font-size:16px;
+}
+.card-head p{
+  margin:4px 0 0;
+  color:var(--muted);
+  font-size:12px;
+}
+.card-body{
+  padding:14px;
+}
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+}
+label{
+  display:block;
+  font-size:10px;
+  font-weight:900;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.4px;
+  margin-bottom:5px;
+}
+input, select, textarea{
+  width:100%;
+  border:1px solid var(--line);
+  background:#fff;
+  padding:8px 9px;
+  font:inherit;
+  border-radius:2px;
+}
+textarea{
+  min-height:58px;
+  resize:vertical;
+}
+.kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:8px;
+}
+.kpi{
+  border:1px solid var(--line);
+  background:#fff;
+  padding:10px;
+  min-height:78px;
+}
+.kpi small{
+  display:block;
+  font-size:10px;
+  text-transform:uppercase;
+  font-weight:900;
+  color:var(--muted);
+  margin-bottom:7px;
+}
+.kpi strong{
+  display:block;
+  font-size:21px;
+}
+.kpi span{
+  color:var(--muted);
+  font-size:11px;
+}
+.info{background:var(--soft-blue)}
+.good{background:var(--soft-green)}
+.warn{background:var(--soft-amber)}
+.bad{background:var(--soft-red)}
+.purple{background:var(--soft-purple)}
+.progress-wrap{
+  height:8px;
+  border:1px solid var(--line);
+  background:#EFF4F8;
+  margin-top:10px;
+}
+.progress{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--blue),var(--green));
+}
+.alert{
+  margin-top:10px;
+  border:1px solid var(--line);
+  padding:10px 11px;
+  background:#fff;
+  color:var(--muted);
+}
+.alert.good{background:var(--soft-green);border-color:#ABEFC6;color:#067647}
+.alert.warn{background:var(--soft-amber);border-color:#FED7AA;color:#93370D}
+.alert.bad{background:var(--soft-red);border-color:#FECDCA;color:#912018}
+.layout{
+  display:grid;
+  grid-template-columns:280px 1fr;
+  gap:12px;
+  margin-top:12px;
+}
+.sidebar{
+  position:sticky;
+  top:10px;
+  align-self:start;
+}
+.week-nav{
+  display:grid;
+  gap:6px;
+}
+.week-btn{
+  width:100%;
+  background:#fff;
+  color:var(--text);
+  border:1px solid var(--line);
+  padding:9px 10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.week-btn.active{
+  background:var(--navy);
+  color:#fff;
+}
+.badge{
+  border:1px solid var(--line);
+  background:#F2F4F7;
+  color:var(--muted);
+  font-size:11px;
+  font-weight:900;
+  padding:2px 6px;
+}
+.week-btn.active .badge{
+  background:rgba(255,255,255,.12);
+  color:#fff;
+  border-color:rgba(255,255,255,.35);
+}
+.mini-list{
+  margin-top:10px;
+  display:grid;
+  gap:6px;
+}
+.mini{
+  border:1px solid var(--line);
+  padding:8px 9px;
+  display:flex;
+  justify-content:space-between;
+  color:var(--muted);
+}
+.mini strong{
+  color:var(--text);
+}
+.week-panel{
+  display:none;
+}
+.week-panel.active{
+  display:block;
+}
+.week-head{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  align-items:flex-start;
+  margin-bottom:10px;
+}
+.week-head h3{
+  margin:0;
+  font-size:20px;
+  color:var(--navy);
+}
+.tags{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+.tag{
+  border:1px solid var(--line);
+  background:#fff;
+  padding:5px 8px;
+  font-size:11px;
+  font-weight:900;
+  color:var(--muted);
+}
+.phase-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-bottom:10px;
+}
+.phase{
+  border:1px solid var(--line);
+  background:#FBFCFE;
+  padding:10px;
+}
+.phase b{
+  display:block;
+  color:var(--navy);
+  margin-bottom:4px;
+}
+.phase p{
+  margin:0;
+  color:#344054;
+  font-size:12px;
+}
+.day-list{
+  display:grid;
+  gap:8px;
+}
+.day-card{
+  border:1px solid var(--line);
+  background:#fff;
+}
+.day-title{
+  padding:10px 11px;
+  background:#F8FAFC;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
+}
+.day-title h4{
+  margin:0;
+  font-size:14px;
+  color:var(--navy);
+}
+.day-content{
+  display:none;
+  padding:11px;
+}
+.day-card.open .day-content{
+  display:block;
+}
+.meal-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+}
+.box{
+  border:1px solid var(--line);
+  padding:10px;
+  background:#fff;
+}
+.box h5{
+  margin:0 0 7px;
+  color:var(--blue);
+  font-size:12.8px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.box ul{
+  margin:0;
+  padding-left:16px;
+  color:#344054;
+  font-size:12px;
+}
+.box li{
+  margin:3px 0;
+}
+input[type=checkbox]{
+  width:16px;
+  height:16px;
+  accent-color:var(--green);
+}
+.track-grid{
+  display:grid;
+  grid-template-columns:repeat(8,1fr);
+  gap:7px;
+  margin-top:9px;
+}
+.routine{
+  margin-top:9px;
+  border:1px solid #D6BBFB;
+  background:#FAF8FF;
+}
+.routine-head{
+  padding:9px 10px;
+  border-bottom:1px solid #D6BBFB;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.routine-head h5{
+  margin:0;
+  color:var(--purple);
+  font-size:13px;
+  font-weight:700;
+  text-transform:none;
+}
+.routine-grid{
+  padding:9px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+.routine-step{
+  border:1px solid #D6BBFB;
+  background:#fff;
+  padding:9px 10px;
+  min-height:112px;
+  font-size:11.4px;
+  line-height:1.38;
+  color:#475467;
+  font-weight:400;
+  text-transform:none;
+}
+.routine-step input{
+  margin-bottom:6px;
+}
+.routine-step b{
+  display:block;
+  color:var(--purple);
+  margin-bottom:5px;
+  font-size:11px;
+  line-height:1.25;
+  font-weight:700;
+  text-transform:none;
+  letter-spacing:.1px;
+}
+.routine-step span{
+  display:block;
+  color:#475467;
+  font-weight:400;
+  text-transform:none;
+}
+.checkrow{
+  display:grid;
+  grid-template-columns:repeat(8,1fr);
+  gap:7px;
+  margin-top:8px;
+}
+.check{
+  border:1px solid var(--line);
+  padding:7px;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  color:#344054;
+  font-size:11.5px;
+}
+.calc-row{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:7px;
+  margin-top:9px;
+}
+.calc{
+  border:1px solid var(--line);
+  background:#FBFCFE;
+  padding:9px;
+}
+.calc small{
+  display:block;
+  color:var(--muted);
+  font-size:9.6px;
+  text-transform:uppercase;
+  font-weight:900;
+  margin-bottom:4px;
+}
+.calc strong{
+  font-size:15px;
+}
+.notes-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:8px;
+}
+.table{
+  width:100%;
+  border-collapse:collapse;
+}
+.table th,.table td{
+  border:1px solid var(--line);
+  padding:8px;
+  text-align:left;
+  vertical-align:top;
+  font-size:12px;
+}
+.table th{
+  background:#F8FAFC;
+  color:var(--navy);
+  text-transform:uppercase;
+  font-size:11px;
+}
+.option-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+}
+.option-card{
+  border:1px solid var(--line);
+  background:#fff;
+  padding:10px;
+}
+.option-card h4{
+  margin:0 0 7px;
+  color:var(--navy);
+}
+.option-card ul{
+  margin:0;
+  padding-left:16px;
+  color:#344054;
+}
+.footer-note{
+  margin-top:12px;
+  border:1px solid var(--line);
+  background:#fff;
+  padding:10px 12px;
+  color:var(--muted);
+}
+@media(max-width:1250px){
+  .grid-top,.layout{grid-template-columns:1fr}
+  .sidebar{position:static}
+  .kpi-grid{grid-template-columns:repeat(3,1fr)}
+  .form-grid,.phase-grid,.meal-grid,.option-grid{grid-template-columns:repeat(2,1fr)}
+  .track-grid,.routine-grid,.checkrow,.calc-row{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:720px){
+  .header{flex-direction:column;align-items:flex-start}
+  .kpi-grid,.form-grid,.phase-grid,.meal-grid,.option-grid,.track-grid,.routine-grid,.checkrow,.calc-row,.notes-grid{grid-template-columns:1fr}
+}
+@media print{
+  body{background:#fff}
+  .wrapper{width:100%;margin:0}
+  .actions,.sidebar{display:none}
+  .grid-top,.layout{display:block}
+  .card{margin-bottom:10px;box-shadow:none}
+  .week-panel{display:block}
+  .day-content{display:block!important}
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <header class="header">
+    <div class="brand">
+      <div class="logo">AR</div>
+      <div>
+        <h1>Programa Nutricional y Físico de Alto Rendimiento · 8 Semanas</h1>
+        <p class="subtitle">Tenis de mesa · pérdida de grasa · energía competitiva · 70% velocidad de desplazamiento</p>
+      </div>
+    </div>
+    <div class="actions">
+      <button onclick="window.print()">Imprimir / PDF</button>
+      <button class="secondary" onclick="saveAll(); toast('Avance guardado')">Guardar</button>
+      <button class="danger" onclick="resetAll()">Limpiar</button>
+    </div>
+  </header>
+
+  <section class="grid-top">
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <h2>Ficha inicial</h2>
+          <p>Datos para cálculos nutricionales y deportivos.</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="form-grid">
+          <div><label>Deportista</label><input data-save="nombre" placeholder="Nombre"></div>
+          <div><label>Fecha inicio</label><input data-save="fecha_inicio" type="date"></div>
+          <div><label>Estatura cm</label><input data-save="estatura" type="number" value="160"></div>
+          <div><label>Peso inicial kg</label><input data-save="peso_inicial" type="number" step="0.1" value="80"></div>
+          <div><label>Meta 8 semanas kg</label><input data-save="meta_peso" type="number" step="0.1" placeholder="Ej: 74"></div>
+          <div><label>Agua objetivo L</label><input data-save="agua_objetivo" type="number" step="0.1" value="2.3"></div>
+          <div><label>Proteína objetivo g</label><input data-save="proteina_objetivo" type="number" value="120"></div>
+          <div><label>Tenis/semana</label><input data-save="entrenos_tenis" type="number" placeholder="Ej: 3"></div>
+        </div>
+        <div class="alert warn">
+          Enfoque técnico: déficit calórico moderado, proteína alta, carbohidrato estratégico y rutina diaria de 30 minutos. No se busca bajar peso a costa de perder velocidad, recuperación o potencia.
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <h2>Panel de rendimiento</h2>
+          <p>Indicadores calculados automáticamente con los registros diarios.</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="kpi-grid">
+          <div class="kpi info"><small>IMC inicial</small><strong id="imcInicial">—</strong><span id="imcEstado">Completar</span></div>
+          <div class="kpi good"><small>Peso actual</small><strong id="pesoActual">—</strong><span>último registro</span></div>
+          <div class="kpi warn"><small>Ritmo kg/sem</small><strong id="ritmoSemanal">—</strong><span>estimado</span></div>
+          <div class="kpi purple"><small>Índice velocidad</small><strong id="indiceVelocidad">0%</strong><span>rutina específica</span></div>
+          <div class="kpi info"><small>Readiness</small><strong id="readiness">—</strong><span>energía + sueño + dolor</span></div>
+          <div class="kpi good"><small>Adherencia total</small><strong id="adhTotal">0%</strong><span>nutrición + rutina</span></div>
+        </div>
+        <div class="progress-wrap"><div class="progress" id="progressMeta"></div></div>
+        <div class="alert" id="alertaPrincipal">Completa meta y registros para activar recomendaciones.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="layout">
+    <aside class="card sidebar">
+      <div class="card-head">
+        <div>
+          <h2>Seguimiento</h2>
+          <p>Semanas del programa.</p>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="week-nav" id="weekNav"></div>
+        <div class="mini-list">
+          <div class="mini"><span>Nutrición</span><strong id="miniNutri">0%</strong></div>
+          <div class="mini"><span>Rutina 30m</span><strong id="miniRutina">0%</strong></div>
+          <div class="mini"><span>Desplazamiento</span><strong id="miniSpeed">0%</strong></div>
+          <div class="mini"><span>Prom. energía</span><strong id="miniEnergia">—</strong></div>
+          <div class="mini"><span>Prom. sueño</span><strong id="miniSueno">—</strong></div>
+          <div class="mini"><span>Prom. agua</span><strong id="miniAgua">—</strong></div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="card">
+      <div class="card-head">
+        <div>
+          <h2>Programa semanal alimentario y físico</h2>
+          <p>Rutinas variadas con 70% foco en velocidad de desplazamiento, reacción y cambios de dirección.</p>
+        </div>
+      </div>
+      <div class="card-body" id="weeksContainer"></div>
+    </main>
+  </section>
+
+  <section class="card" style="margin-top:12px">
+    <div class="card-head">
+      <div>
+        <h2>Recomendaciones automáticas</h2>
+        <p>Resumen ejecutivo según datos ingresados.</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="kpi-grid">
+        <div class="kpi info"><small>Baja total</small><strong id="bajaTotal">—</strong><span>desde inicio</span></div>
+        <div class="kpi info"><small>Meta lograda</small><strong id="metaLograda">0%</strong><span>progreso</span></div>
+        <div class="kpi warn"><small>Riesgo déficit</small><strong id="riesgoDeficit">—</strong><span>peso + energía</span></div>
+        <div class="kpi purple"><small>Foco físico</small><strong>70%</strong><span>desplazamiento</span></div>
+        <div class="kpi good"><small>Estado general</small><strong id="estadoGeneral">—</strong><span>decisión</span></div>
+        <div class="kpi warn"><small>Prom. dolor</small><strong id="promDolor">—</strong><span>0 a 10</span></div>
+      </div>
+      <div class="alert" id="recomendacionFinal">Registra peso, energía, sueño, agua y cumplimiento para recibir recomendaciones.</div>
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:12px">
+    <div class="card-head">
+      <div>
+        <h2>Guía técnica de la rutina de 30 minutos</h2>
+        <p>Aproximadamente 21 minutos están destinados a desplazamiento, reacción y cambios de dirección.</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr><th>Bloque</th><th>Duración</th><th>Objetivo</th><th>Indicaciones técnicas</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Velocidad de pies</td><td>8 min</td><td>Primer paso, frecuencia y postura baja</td><td>Rodillas semiflexionadas, peso en punta de pies, pasos cortos y rápidos.</td></tr>
+          <tr><td>Desplazamiento lateral</td><td>7 min</td><td>Cubrir mesa y volver al centro</td><td>No cruzar pies en desplazamientos cortos; regresar siempre a posición neutra.</td></tr>
+          <tr><td>Reacción y cambios de dirección</td><td>6 min</td><td>Responder estímulos y frenar sin perder equilibrio</td><td>Usar señales visuales/sonoras, conos o marcas en el piso.</td></tr>
+          <tr><td>Fuerza funcional</td><td>5 min</td><td>Estabilidad de piernas y core</td><td>Trabajo controlado, sin llegar al fallo muscular.</td></tr>
+          <tr><td>Movilidad y descarga</td><td>4 min</td><td>Recuperación y rango de movimiento</td><td>Cadera, tobillos, espalda torácica y respiración.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:12px">
+    <div class="card-head">
+      <div>
+        <h2>Indicaciones alimentarias</h2>
+        <p>Simples, económicas y orientadas a sostener velocidad y recuperación.</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="option-grid">
+        <div class="option-card"><h4>Proteína diaria</h4><ul><li>Objetivo: 110 a 130 g/día.</li><li>Huevos, pollo, jurel, atún, yogur, quesillo y legumbres.</li><li>Debe aparecer en cada comida.</li></ul></div>
+        <div class="option-card"><h4>Carbohidrato estratégico</h4><ul><li>Antes de entrenar: fruta, avena o pan integral.</li><li>Después: papa, arroz o legumbre medida.</li><li>No eliminar en días de intensidad.</li></ul></div>
+        <div class="option-card"><h4>Déficit seguro</h4><ul><li>Baja ideal: 0,4 a 0,9 kg/semana.</li><li>Más rápido puede afectar velocidad y recuperación.</li><li>Si energía baja: subir carbohidrato deportivo.</li></ul></div>
+        <div class="option-card"><h4>Compra económica</h4><ul><li>Huevos, jurel, atún, pollo, lentejas.</li><li>Avena, arroz, papa, frutas de temporada.</li><li>Repollo, zanahoria, lechuga, tomate.</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <p class="footer-note">Documento de planificación deportiva y nutricional. No reemplaza evaluación individual presencial de nutricionista, médico o kinesiólogo.</p>
+</div>
+
+<script>
+const KEY = "alto_rendimiento_tenis_mesa_8s_corregido";
+
+const phases = [
+  {t:"Adaptación técnica", o:"Ordenar comidas, eliminar extras líquidos y aprender rutina de pies.", a:"No recortar agresivo; priorizar constancia."},
+  {t:"Déficit controlado", o:"Sostener proteína y aumentar cumplimiento de desplazamiento.", a:"Reducir pan/arroz solo en días sin tenis."},
+  {t:"Base de velocidad", o:"Mejorar frecuencia de pies y postura baja.", a:"Carbohidrato antes del trabajo rápido."},
+  {t:"Reacción competitiva", o:"Cambios de dirección y estímulos visuales/sonoros.", a:"Post-entreno con proteína + carbohidrato medido."},
+  {t:"Intensificación", o:"Más calidad en desplazamientos, menos pausa improductiva.", a:"Si energía menor a 5, subir fruta o papa alrededor del entreno."},
+  {t:"Consistencia", o:"Convertir rutina en hábito diario.", a:"Preparar comidas base 2 veces por semana."},
+  {t:"Velocidad específica", o:"Simular movimientos de mesa: corto-largo-lateral.", a:"Evitar déficit extremo; velocidad requiere combustible."},
+  {t:"Evaluación y cierre", o:"Medir progreso físico, peso y rendimiento.", a:"Definir siguiente ciclo según energía y cumplimiento."}
+];
+
+const menus = [
+  {d:["2 huevos + pan integral chico","1 fruta","Té/café sin azúcar"], a:["Pollo, jurel o atún","½ taza arroz o 1 papa","Ensalada grande"], c:["Yogur proteico o natural","Fruta si entrena"], n:["Omelette o atún","Verduras o sopa","Legumbre si hay hambre"]},
+  {d:["Avena 3-4 cucharadas","Leche descremada o yogur","1 huevo duro"], a:["Lentejas o porotos","Huevo o atún extra","Ensalada verde"], c:["Quesillo o jamón pavo","Manzana o naranja"], n:["Pollo desmenuzado","Ensalada grande","Papa pequeña si entrenó"]},
+  {d:["2 huevos duros","Pan pita o integral","Tomate o ¼ palta"], a:["Pollo o pescado","½ taza arroz o quinoa","Verduras cocidas"], c:["Yogur alto proteína","Plátano chico si intenso"], n:["Ensalada con jurel/atún","Garbanzos opcional","Agua o té"]},
+  {d:["Yogur natural/proteico","Avena 3 cucharadas","Fruta picada"], a:["Charquicán liviano","Carne magra o pollo","Ensalada; sin pan extra"], c:["Huevo duro + fruta","O quesillo con tomate"], n:["Sopa de verduras","Pavo, pollo o jurel","Ensalada libre"]},
+  {d:["Omelette con verduras","1 fruta","Café/té sin azúcar"], a:["Garbanzos o porotos","Atún, huevo o pollo","Ensalada chilena"], c:["Pre-entreno: plátano/manzana","Yogur o leche"], n:["Jurel o atún","Ensalada grande","Papa/arroz si entrenó fuerte"]},
+  {d:["Pan integral con quesillo","1 huevo duro","Té/café"], a:["Pollo, pescado o carne magra","Papa o ½ taza arroz","Verduras salteadas"], c:["Yogur proteico o leche","Fruta si requiere"], n:["Tortilla verduras","Ensalada grande","Sin pan si no entrenó"]},
+  {d:["Avena con yogur/leche","1 huevo duro","1 fruta"], a:["Cazuela liviana","Mucha verdura","Papa pequeña o ½ choclo"], c:["Quesillo, yogur o huevo","Fruta si hay entreno"], n:["Ensalada grande","Atún, jurel, pollo o huevo","Legumbre si hambre"]}
+];
+
+const routines = [
+  [
+    ["Activación tobillo-cadera","4 min","movilidad dinámica de tobillos, cadera y rodillas. trabajar en postura baja, con apoyo en la punta de los pies y control de equilibrio."],
+    ["Shadow lateral 2 puntos","6 min","desplazarse de derecha a revés sin pelota, simulando golpe y recuperación al centro. mantener pasos cortos, rápidos y sin cruzar los pies."],
+    ["Ladder imaginaria","5 min","marcar una escalera en el piso o usar líneas. realizar entradas y salidas rápidas adelante-atrás, cuidando coordinación y ritmo de pies."],
+    ["Corto-largo","5 min","partir cerca de la mesa, entrar con paso corto y salir hacia atrás con control. volver siempre a posición neutra para el siguiente movimiento."],
+    ["Sentadilla + split squat","5 min","fortalecer piernas con sentadillas controladas y zancadas cortas. bajar con técnica, sin perder alineación de rodillas ni estabilidad del tronco."],
+    ["Core + respiración","5 min","realizar plancha, dead bug y respiración profunda. activar abdomen sin tensión cervical y terminar bajando pulsaciones."]
+  ],
+  [
+    ["Movilidad elástica","4 min","activar tobillos, rodillas y cadera con movimientos suaves y progresivos. preparar articulaciones para cambios de dirección rápidos."],
+    ["Side shuffle 3 marcas","6 min","usar tres marcas en el piso y desplazarse lateralmente entre ellas. mantener base baja, pecho estable y retorno rápido al centro."],
+    ["Reacción palmada","5 min","salir hacia derecha, izquierda o adelante según señal sonora. frenar con control, estabilizar y volver a postura inicial."],
+    ["Paso pivote derecha","5 min","simular ataque de derecha desde zona de revés. girar cadera, ajustar pies y recuperar rápido al centro de la mesa."],
+    ["Puente glúteo + gemelos","5 min","trabajar empuje de piernas con puente de glúteo y elevaciones de gemelo. ejecutar lento y con rango completo."],
+    ["Elongación activa","5 min","descargar cadera, isquiotibiales, espalda y gemelos. mantener respiración controlada y sin rebotes."]
+  ],
+  [
+    ["Activación general","4 min","skipping suave, movilidad de hombros, cadera y tobillos. entrar en calor sin fatigar antes del trabajo de velocidad."],
+    ["Figura T","6 min","moverse en forma de t: centro, lateral, frente y regreso. priorizar freno, equilibrio y vuelta rápida a la posición base."],
+    ["Split step + salida","5 min","hacer pequeño salto de activación y salir explosivamente a una dirección. caer suave, reaccionar rápido y no quedar rígida."],
+    ["Multi-dirección 4 conos","5 min","trabajar adelante, atrás, lateral y diagonal con cuatro marcas. mirar al frente y mantener pasos cortos de ajuste."],
+    ["Zancadas cortas","5 min","realizar zancadas controladas para fortalecer piernas y estabilidad. no buscar velocidad, sino técnica y control articular."],
+    ["Core anti-rotación","5 min","plancha lateral, dead bug o presión contra pared. mantener abdomen firme para mejorar estabilidad al golpear."]
+  ],
+  [
+    ["Movilidad + base baja","4 min","preparar tobillos, cadera y columna. sostener postura baja similar a la posición de espera en tenis de mesa."],
+    ["Derecha-revés-centro","6 min","simular golpe de derecha, golpe de revés y retorno al centro. trabajar ritmo constante y recuperación después de cada acción."],
+    ["Semáforo reacción","5 min","usar señales: rojo detener, verde salir, azul lateral. mejorar reacción, control del freno y cambio de dirección."],
+    ["Entrada corta flick","5 min","dar paso corto hacia adelante como si se atacara una pelota corta. regresar rápido sin levantarse demasiado."],
+    ["Sentadilla isométrica","5 min","mantener posición de sentadilla parcial y hacer pequeños ajustes de pies. fortalecer resistencia específica de piernas."],
+    ["Descarga muscular","5 min","elongar cadera, cuádriceps, gemelos y espalda. cerrar con respiración nasal lenta para facilitar recuperación."]
+  ],
+  [
+    ["Activación neural","4 min","saltitos suaves, movilidad y aceleraciones pequeñas. preparar el sistema nervioso para moverse rápido sin tensión."],
+    ["Intervalos 10/10 lateral","6 min","hacer 10 segundos de desplazamiento lateral rápido y 10 segundos suave. repetir manteniendo técnica y postura baja."],
+    ["Diagonal corta-larga","5 min","moverse desde esquina corta a posición larga y volver al centro. entrenar lectura de distancia y ajuste de pies."],
+    ["Reacción visual con objeto","5 min","responder a una señal de mano, color u objeto. salir hacia la dirección indicada y recuperar equilibrio."],
+    ["Core dinámico","5 min","mountain climber controlado, dead bug o plancha con toque. mantener tronco firme y respiración estable."],
+    ["Movilidad final","5 min","liberar cadera, tobillos y espalda. evitar estiramientos dolorosos y terminar con sensación de recuperación."]
+  ],
+  [
+    ["Movilidad técnica","4 min","activar articulaciones en postura de juego. realizar pequeños balanceos y ajustes de pies antes de acelerar."],
+    ["Paso chino lateral","6 min","usar desplazamiento más largo cuando la distancia lo exija. cruzar solo si es necesario y recuperar rápido la base."],
+    ["Micro pasos de ajuste","5 min","hacer pasos muy cortos antes de simular el golpe. mejorar precisión de posición y timing con la pelota."],
+    ["Pivote + recuperación","5 min","pivote para atacar de derecha y regreso inmediato. cuidar que el cuerpo no quede abierto ni fuera de equilibrio."],
+    ["Fuerza unilateral","5 min","zancada atrás, puente a una pierna o equilibrio monopodal. fortalecer control de cada pierna por separado."],
+    ["Respiración + estirar","5 min","bajar pulsaciones con respiración controlada. elongar cadera, isquios, espalda y gemelos."]
+  ],
+  [
+    ["Entrada en calor","4 min","movilidad general y skipping suave. preparar pies, cadera y tronco para una sesión rápida y coordinada."],
+    ["Circuito mesa imaginaria","6 min","marcar cuatro zonas alrededor de una mesa imaginaria. moverse a cada esquina y volver al centro en cada repetición."],
+    ["Reacción 1-2-3","5 min","asignar números a direcciones y reaccionar a la señal. acelerar, frenar y volver a postura de espera."],
+    ["Freno y arranque","5 min","acelerar, detener completamente y salir hacia el lado opuesto. entrenar control, equilibrio y potencia del primer paso."],
+    ["Core y estabilidad","5 min","plancha con toque de hombros o bird dog. evitar balanceo excesivo y mantener abdomen firme."],
+    ["Descarga","5 min","elongación activa y respiración. terminar con sensación de piernas livianas, no agotadas."]
+  ]
+];
+
+function buildNav(){
+  let html="";
+  for(let w=1; w<=8; w++){
+    html += '<button class="week-btn '+(w===1?'active':'')+'" onclick="showWeek('+w+')">Semana '+w+'<span class="badge" id="weekBadge'+w+'">0%</span></button>';
+  }
+  document.getElementById("weekNav").innerHTML = html;
+}
+
+function ul(items){
+  return "<ul>" + items.map(i => "<li>"+i+"</li>").join("") + "</ul>";
+}
+
+function mealBox(w,d,k,title,items){
+  return '<div class="box"><h5>'+title+'<input data-save="w'+w+'d'+d+'_'+k+'_ok" type="checkbox"></h5>'+ul(items)+'</div>';
+}
+
+function routineBox(w,d,idx,item){
+  const keys = ["mov","speed1","speed2","speed3","strength","recovery"];
+  const speed = (idx>=1 && idx<=3) ? ' data-speed="1"' : "";
+  return '<label class="routine-step"><input data-save="w'+w+'d'+d+'_r_'+keys[idx]+'"'+speed+' type="checkbox"><b>'+item[0].toLowerCase()+' · '+item[1].toLowerCase()+'</b><span>'+item[2].toLowerCase()+'</span></label>';
+}
+
+function buildWeeks(){
+  let out = "";
+  for(let w=1; w<=8; w++){
+    const ph = phases[w-1];
+    out += '<section class="week-panel '+(w===1?'active':'')+'" id="week'+w+'">';
+    out += '<div class="week-head"><div><h3>Semana '+w+': '+ph.t+'</h3><span class="tag">Plan alto rendimiento · fase '+w+'/8</span></div>';
+    out += '<div class="tags"><span class="tag">Semana <b id="weekPct'+w+'">0%</b></span><span class="tag">Velocidad <b id="weekSpeed'+w+'">0%</b></span><span class="tag">Peso prom. <b id="weekPeso'+w+'">—</b></span></div></div>';
+    out += '<div class="phase-grid"><div class="phase"><b>Objetivo</b><p>'+ph.o+'</p></div><div class="phase"><b>Ajuste nutricional</b><p>'+ph.a+'</p></div><div class="phase"><b>Foco físico</b><p>70% desplazamiento: frecuencia de pies, lateralidad, reacción y regreso al centro.</p></div></div>';
+    out += '<div class="day-list">';
+    for(let d=1; d<=7; d++){
+      const m = menus[d-1];
+      const r = routines[(w+d-2)%routines.length];
+      out += '<article class="day-card '+(w===1 && d===1?'open':'')+'" id="w'+w+'d'+d+'">';
+      out += '<div class="day-title" onclick="toggleDay('+w+','+d+')"><h4>Semana '+w+' · Día '+d+'</h4><span class="badge" id="dayBadge'+w+'_'+d+'">0%</span></div>';
+      out += '<div class="day-content">';
+      out += '<div class="meal-grid">'+mealBox(w,d,"desayuno","Desayuno",m.d)+mealBox(w,d,"almuerzo","Almuerzo",m.a)+mealBox(w,d,"colacion","Colación deportiva",m.c)+mealBox(w,d,"cena","Cena",m.n)+'</div>';
+      out += '<div class="track-grid">';
+      out += '<div><label>Peso kg</label><input data-save="w'+w+'d'+d+'_peso" type="number" step="0.1"></div>';
+      out += '<div><label>Energía 1-10</label><input data-save="w'+w+'d'+d+'_energia" type="number" min="1" max="10"></div>';
+      out += '<div><label>Sueño h</label><input data-save="w'+w+'d'+d+'_sueno" type="number" step="0.5"></div>';
+      out += '<div><label>Agua L</label><input data-save="w'+w+'d'+d+'_agua" type="number" step="0.1"></div>';
+      out += '<div><label>Hambre 1-10</label><input data-save="w'+w+'d'+d+'_hambre" type="number" min="1" max="10"></div>';
+      out += '<div><label>Tenis min</label><input data-save="w'+w+'d'+d+'_tenis" type="number" step="5"></div>';
+      out += '<div><label>RPE 1-10</label><input data-save="w'+w+'d'+d+'_rpe" type="number" min="1" max="10"></div>';
+      out += '<div><label>Dolor 0-10</label><input data-save="w'+w+'d'+d+'_dolor" type="number" min="0" max="10"></div>';
+      out += '</div>';
+      out += '<div class="routine"><div class="routine-head"><h5>Rutina diaria 30 minutos · 70% desplazamiento</h5><span class="tag">Velocidad: <b id="daySpeed'+w+'_'+d+'">0%</b></span></div>';
+      out += '<div class="routine-grid">'+r.map((x,i)=>routineBox(w,d,i,x)).join("")+'</div></div>';
+      out += '<div class="checkrow">';
+      ["sin_bebida|Sin bebida","sin_fritura|Sin fritura","proteina|Proteína alta","verduras|Verduras","agua_ok|Agua objetivo","post_entreno|Post-entreno","sin_picoteo|Sin picoteo","rutina30|30 min completos"].forEach(pair=>{
+        const parts = pair.split("|");
+        out += '<label class="check"><input data-save="w'+w+'d'+d+'_'+parts[0]+'" type="checkbox">'+parts[1]+'</label>';
+      });
+      out += '</div>';
+      out += '<div class="calc-row">';
+      out += '<div class="calc"><small>Nutrición</small><strong id="calcNutri'+w+'_'+d+'">0%</strong></div>';
+      out += '<div class="calc"><small>Rutina</small><strong id="calcRutina'+w+'_'+d+'">0%</strong></div>';
+      out += '<div class="calc"><small>Velocidad</small><strong id="calcSpeed'+w+'_'+d+'">0%</strong></div>';
+      out += '<div class="calc"><small>Hábitos</small><strong id="calcHab'+w+'_'+d+'">0%</strong></div>';
+      out += '<div class="calc"><small>Readiness</small><strong id="calcReady'+w+'_'+d+'">—</strong></div>';
+      out += '<div class="calc"><small>Carga</small><strong id="calcCarga'+w+'_'+d+'">—</strong></div>';
+      out += '<div class="calc"><small>Señal</small><strong id="calcSenal'+w+'_'+d+'">—</strong></div>';
+      out += '</div>';
+      out += '<div class="notes-grid"><div><label>Observaciones físicas / tenis</label><textarea data-save="w'+w+'d'+d+'_obs_fisica" placeholder="Velocidad, reacción, dolor, fatiga, técnica..."></textarea></div><div><label>Comidas extras / ansiedad / ajustes</label><textarea data-save="w'+w+'d'+d+'_obs_comida" placeholder="Extras, hambre, eventos, cambios de porción..."></textarea></div></div>';
+      out += '</div></article>';
+    }
+    out += '</div></section>';
+  }
+  document.getElementById("weeksContainer").innerHTML = out;
+}
+
+function showWeek(w){
+  document.querySelectorAll(".week-panel").forEach(el=>el.classList.remove("active"));
+  document.getElementById("week"+w).classList.add("active");
+  document.querySelectorAll(".week-btn").forEach(el=>el.classList.remove("active"));
+  document.querySelectorAll(".week-btn")[w-1].classList.add("active");
+}
+
+function toggleDay(w,d){
+  document.getElementById("w"+w+"d"+d).classList.toggle("open");
+}
+
+function val(k){
+  const el = document.querySelector('[data-save="'+k+'"]');
+  if(!el) return "";
+  return el.type === "checkbox" ? el.checked : el.value;
+}
+function num(k){
+  const v = parseFloat(val(k));
+  return Number.isFinite(v) ? v : null;
+}
+function setText(id,t){
+  const el = document.getElementById(id);
+  if(el) el.textContent = t;
+}
+function pct(a,b){ return b ? Math.round((a/b)*100) : 0; }
+function avg(a){ return a.length ? a.reduce((x,y)=>x+y,0)/a.length : null; }
+
+function collectData(){
+  const data = {};
+  document.querySelectorAll("[data-save]").forEach(el=>{
+    data[el.dataset.save] = el.type === "checkbox" ? el.checked : el.value;
+  });
+  return data;
+}
+function saveAll(){ localStorage.setItem(KEY, JSON.stringify(collectData())); }
+function loadAll(){
+  const raw = localStorage.getItem(KEY);
+  if(!raw) return;
+  const data = JSON.parse(raw);
+  document.querySelectorAll("[data-save]").forEach(el=>{
+    if(data[el.dataset.save] === undefined) return;
+    if(el.type === "checkbox") el.checked = data[el.dataset.save];
+    else el.value = data[el.dataset.save];
+  });
+}
+function resetAll(){
+  if(!confirm("¿Seguro que deseas limpiar todos los datos?")) return;
+  localStorage.removeItem(KEY);
+  document.querySelectorAll("[data-save]").forEach(el=>{
+    if(el.type === "checkbox") el.checked = false;
+    else el.value = "";
+  });
+  document.querySelector('[data-save="estatura"]').value = 160;
+  document.querySelector('[data-save="peso_inicial"]').value = 80;
+  document.querySelector('[data-save="agua_objetivo"]').value = 2.3;
+  document.querySelector('[data-save="proteina_objetivo"]').value = 120;
+  updateAll();
+}
+function toast(msg){
+  const old = document.getElementById("toast");
+  if(old) old.remove();
+  const t = document.createElement("div");
+  t.id = "toast";
+  t.textContent = msg;
+  t.style.cssText = "position:fixed;right:18px;bottom:18px;background:#061B33;color:#fff;padding:11px 13px;border:1px solid #fff;font-weight:800;z-index:999";
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),1600);
+}
+function latestWeight(){
+  let last = null;
+  for(let w=1; w<=8; w++){
+    for(let d=1; d<=7; d++){
+      const p = num("w"+w+"d"+d+"_peso");
+      if(p !== null) last = p;
+    }
+  }
+  return last;
+}
+function firstWeight(){
+  for(let w=1; w<=8; w++){
+    for(let d=1; d<=7; d++){
+      const p = num("w"+w+"d"+d+"_peso");
+      if(p !== null) return p;
+    }
+  }
+  return null;
+}
+
+function updateAll(){
+  const est = num("estatura");
+  const pi = num("peso_inicial");
+  const meta = num("meta_peso");
+  const actual = latestWeight() ?? pi;
+  let weights=[], energies=[], sleeps=[], waters=[], pain=[];
+  let mealDone=0, mealTotal=0, routineDone=0, routineTotal=0, speedDone=0, speedTotal=0, habitDone=0, habitTotal=0;
+
+  for(let w=1; w<=8; w++){
+    let weekScore=0, weekPossible=0, weekSpeedDone=0, weekSpeedTotal=0, weekWeights=[];
+    for(let d=1; d<=7; d++){
+      const mealKeys = ["desayuno","almuerzo","colacion","cena"].map(k=>"w"+w+"d"+d+"_"+k+"_ok");
+      const mDone = mealKeys.filter(k=>val(k)).length;
+      mealDone += mDone; mealTotal += 4;
+
+      const rKeys = ["mov","speed1","speed2","speed3","strength","recovery"].map(k=>"w"+w+"d"+d+"_r_"+k);
+      const rDone = rKeys.filter(k=>val(k)).length;
+      routineDone += rDone; routineTotal += 6;
+
+      const sKeys = ["speed1","speed2","speed3"].map(k=>"w"+w+"d"+d+"_r_"+k);
+      const sDone = sKeys.filter(k=>val(k)).length;
+      speedDone += sDone; speedTotal += 3;
+      weekSpeedDone += sDone; weekSpeedTotal += 3;
+
+      const hKeys = ["sin_bebida","sin_fritura","proteina","verduras","agua_ok","post_entreno","sin_picoteo","rutina30"].map(k=>"w"+w+"d"+d+"_"+k);
+      const hDone = hKeys.filter(k=>val(k)).length;
+      habitDone += hDone; habitTotal += 8;
+
+      const nutritionPct = pct(mDone+hDone,12);
+      const routinePct = pct(rDone,6);
+      const speedPct = pct(sDone,3);
+      const habitsPct = pct(hDone,8);
+      const dayPct = Math.round((nutritionPct + routinePct + speedPct + habitsPct) / 4);
+      weekScore += dayPct; weekPossible += 100;
+
+      setText("calcNutri"+w+"_"+d, nutritionPct+"%");
+      setText("calcRutina"+w+"_"+d, routinePct+"%");
+      setText("calcSpeed"+w+"_"+d, speedPct+"%");
+      setText("daySpeed"+w+"_"+d, speedPct+"%");
+      setText("calcHab"+w+"_"+d, habitsPct+"%");
+      setText("dayBadge"+w+"_"+d, dayPct+"%");
+
+      const e = num("w"+w+"d"+d+"_energia");
+      const sl = num("w"+w+"d"+d+"_sueno");
+      const wa = num("w"+w+"d"+d+"_agua");
+      const pa = num("w"+w+"d"+d+"_dolor");
+      const rp = num("w"+w+"d"+d+"_rpe");
+      const te = num("w"+w+"d"+d+"_tenis");
+      const p = num("w"+w+"d"+d+"_peso");
+
+      if(e!==null) energies.push(e);
+      if(sl!==null) sleeps.push(sl);
+      if(wa!==null) waters.push(wa);
+      if(pa!==null) pain.push(pa);
+      if(p!==null){ weights.push(p); weekWeights.push(p); }
+
+      let ready = "—";
+      if(e!==null || sl!==null || pa!==null){
+        const score = ((e ?? 6)*10) + Math.min((sl ?? 7)*10,80) - ((pa ?? 0)*6);
+        ready = score >= 120 ? "Alto" : score >= 90 ? "Medio" : "Bajo";
+      }
+      setText("calcReady"+w+"_"+d, ready);
+
+      let carga = "—";
+      if(te!==null || rp!==null) carga = String((te ?? 0) * (rp ?? 5));
+      setText("calcCarga"+w+"_"+d, carga);
+
+      let senal = "—";
+      if(ready === "Bajo" || (pa!==null && pa>=6)) senal = "Recuperar";
+      else if(dayPct>=80 && speedPct>=67) senal = "Óptimo";
+      else if(dayPct>=55) senal = "Cumplir";
+      else if(dayPct>0) senal = "Bajo";
+      setText("calcSenal"+w+"_"+d, senal);
+    }
+    const wPct = pct(weekScore,weekPossible);
+    setText("weekPct"+w,wPct+"%");
+    setText("weekBadge"+w,wPct+"%");
+    setText("weekSpeed"+w,pct(weekSpeedDone,weekSpeedTotal)+"%");
+    setText("weekPeso"+w,weekWeights.length ? avg(weekWeights).toFixed(1)+" kg" : "—");
+  }
+
+  const nutriPct = pct(mealDone+habitDone,mealTotal+habitTotal);
+  const rutinaPct = pct(routineDone,routineTotal);
+  const speedPct = pct(speedDone,speedTotal);
+  const adh = Math.round((nutriPct + rutinaPct + speedPct) / 3);
+
+  setText("adhTotal",adh+"%");
+  setText("miniNutri",nutriPct+"%");
+  setText("miniRutina",rutinaPct+"%");
+  setText("miniSpeed",speedPct+"%");
+  setText("indiceVelocidad",speedPct+"%");
+  setText("miniEnergia",energies.length ? avg(energies).toFixed(1)+"/10" : "—");
+  setText("miniSueno",sleeps.length ? avg(sleeps).toFixed(1)+" h" : "—");
+  setText("miniAgua",waters.length ? avg(waters).toFixed(1)+" L" : "—");
+  setText("promDolor",pain.length ? avg(pain).toFixed(1)+"/10" : "—");
+
+  if(est && pi){
+    const imc = pi / ((est/100)*(est/100));
+    setText("imcInicial",imc.toFixed(1));
+    setText("imcEstado", imc<25 ? "Normal" : imc<30 ? "Sobrepeso" : "Rango alto");
+  }
+  setText("pesoActual", actual ? actual.toFixed(1)+" kg" : "—");
+
+  let lost = 0;
+  if(pi && actual){
+    lost = pi - actual;
+    setText("bajaTotal",(lost>=0 ? "-" : "+") + Math.abs(lost).toFixed(1)+" kg");
+  }
+
+  const weeksElapsed = Math.max(1, Math.ceil(weights.length/7));
+  const ritmo = pi && actual ? lost/weeksElapsed : null;
+  setText("ritmoSemanal", ritmo!==null ? ritmo.toFixed(2)+" kg" : "—");
+
+  let progress = 0;
+  if(pi && meta && actual){
+    const total = pi - meta;
+    if(total > 0) progress = Math.max(0, Math.min(100, ((pi-actual)/total)*100));
+  }
+  document.getElementById("progressMeta").style.width = progress.toFixed(0)+"%";
+  setText("metaLograda", progress.toFixed(0)+"%");
+
+  const avgE = avg(energies);
+  const avgS = avg(sleeps);
+  const avgP = avg(pain);
+  let readiness = "—";
+  if(avgE!==null || avgS!==null){
+    const sc = ((avgE ?? 6)*10) + Math.min((avgS ?? 7)*10,80) - ((avgP ?? 0)*5);
+    readiness = sc >= 120 ? "Alto" : sc >= 90 ? "Medio" : "Bajo";
+  }
+  setText("readiness",readiness);
+
+  const alerta = document.getElementById("alertaPrincipal");
+  const final = document.getElementById("recomendacionFinal");
+  let riesgo = "—", estado = "—";
+
+  if(ritmo!==null){
+    if(ritmo>1.0 || readiness==="Bajo"){
+      riesgo = "Alto"; estado = "Ajustar";
+      alerta.className = "alert bad";
+      alerta.textContent = "Riesgo de déficit excesivo o baja recuperación. Subir carbohidrato alrededor del entrenamiento y no reducir proteína.";
+    } else if(ritmo>=0.4 && ritmo<=0.9 && adh>=65){
+      riesgo = "Controlado"; estado = "Óptimo";
+      alerta.className = "alert good";
+      alerta.textContent = "Progreso adecuado: pérdida de grasa con margen para sostener velocidad y recuperación.";
+    } else {
+      riesgo = "Medio"; estado = "Revisar";
+      alerta.className = "alert warn";
+      alerta.textContent = "Revisar adherencia, extras, sueño y porciones antes de hacer cambios agresivos.";
+    }
+  }
+  setText("riesgoDeficit",riesgo);
+  setText("estadoGeneral",estado);
+
+  if(readiness==="Bajo"){
+    final.className = "alert bad";
+    final.textContent = "Recomendación: priorizar recuperación 48-72 h, mantener rutina técnica suave, subir 1 porción de carbohidrato pre/post entrenamiento y revisar sueño.";
+  } else if(speedPct<60){
+    final.className = "alert warn";
+    final.textContent = "Recomendación: el foco físico está bajo. Cumplir los 3 bloques de desplazamiento diarios antes de aumentar intensidad de fuerza.";
+  } else if(nutriPct<65){
+    final.className = "alert warn";
+    final.textContent = "Recomendación: no ajustar calorías todavía. Primero mejorar cumplimiento alimentario, agua, proteína y control de extras.";
+  } else if(ritmo!==null && ritmo>=0.4 && ritmo<=0.9){
+    final.className = "alert good";
+    final.textContent = "Recomendación: mantener el plan. La combinación de nutrición, velocidad y recuperación está en zona efectiva.";
+  } else {
+    final.className = "alert warn";
+    final.textContent = "Recomendación: mantener proteína alta, controlar extras y evaluar tendencia semanal antes de reducir porciones.";
+  }
+
+  saveAll();
+}
+
+buildNav();
+buildWeeks();
+loadAll();
+updateAll();
+document.addEventListener("input", function(e){ if(e.target.matches("[data-save]")) updateAll(); });
+document.addEventListener("change", function(e){ if(e.target.matches("[data-save]")) updateAll(); });
+</script>
+</body>
+</html>
